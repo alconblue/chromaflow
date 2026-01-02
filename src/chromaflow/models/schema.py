@@ -41,6 +41,9 @@ class Chunk(BaseModel):
     visual_embedding: list[float] = Field(
         default_factory=list, description="CLIP embedding of the keyframe (768-dim)"
     )
+    transcript_embedding: list[float] = Field(
+        default_factory=list, description="Text embedding of the transcript (384-dim for MiniLM)"
+    )
     screenshot_path: str | None = Field(
         default=None, description="Path to the extracted keyframe image"
     )

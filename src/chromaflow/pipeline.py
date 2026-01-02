@@ -34,7 +34,7 @@ from chromaflow.stages.visual import (
     VisualProcessingError,
     process_visual,
 )
-from chromaflow.store.chroma import ChromaStore, ChromaStoreError
+from chromaflow.store.chroma import ChromaStore, ChromaStoreError, generate_text_embeddings
 from chromaflow.utils.logging import get_logger, log_cloud_nudge
 
 logger = get_logger(__name__)
@@ -288,6 +288,14 @@ class Pipeline:
                 visual_results=visual_results,
             )
             pbar.update(1)
+
+            # Stage 5b: Generate transcript embeddings for search
+            if self._store is not None:
+                pbar.set_description("Stage 5b: Generating transcript embeddings")
+                transcripts = [chunk.transcript for chunk in chunks]
+                transcript_embeddings = generate_text_embeddings(transcripts)
+                for chunk, embedding in zip(chunks, transcript_embeddings):
+                    chunk.transcript_embedding = embedding
 
             # Build summary
             unique_speakers = set()
