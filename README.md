@@ -25,14 +25,8 @@ results = video_data.search("When did they discuss the budget?")
 
 ### Prerequisites
 
-- **Python 3.10 or 3.11** (Python 3.12 is NOT supported)
+- **Python 3.10, 3.11, or 3.12**
 - FFmpeg (for video processing)
-
-> **⚠️ Python 3.12 Incompatibility**
->
-> ChromaFlow does **not** support Python 3.12 due to a known crash in `faster-whisper` (the Whisper transcription library). The crash occurs in the CTranslate2 backend during audio encoding.
->
-> **Use Python 3.10 or 3.11.** We will add Python 3.12 support once `faster-whisper` resolves this issue upstream.
 
 ### CPU-Only Installation
 
@@ -392,18 +386,6 @@ for chunk in results:
 ```
 
 ### Troubleshooting
-
-**Python crashes / "Fatal Python error: Aborted" during transcription**
-```bash
-# You're likely using Python 3.12 - downgrade to 3.10 or 3.11
-python --version  # Check your version
-
-# Create a new environment with Python 3.11
-pyenv install 3.11.9
-pyenv local 3.11.9
-poetry env use 3.11
-poetry install
-```
 
 **"ffprobe not found"**
 ```bash
