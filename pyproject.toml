@@ -1,0 +1,86 @@
+[tool.poetry]
+name = "chromaflow"
+version = "0.1.0"
+description = "Turn video into RAG-ready artifacts in one line of code"
+authors = ["ChromaFlow Team"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "chromaflow", from = "src"}]
+keywords = ["video", "rag", "multimodal", "ai", "embeddings", "transcription"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+
+# Video I/O
+decord = "^0.6.0"
+ffmpeg-python = "^0.2.0"
+
+# Scene Detection
+scenedetect = {version = "^0.6", extras = ["opencv"]}
+
+# Audio Intelligence
+faster-whisper = "^1.0.0"
+pyannote-audio = "^3.1"
+
+# Visual Intelligence
+sentence-transformers = "^3.0"
+torch = ">=2.0"
+torchvision = ">=0.15"
+Pillow = "^10.0"
+
+# Vector Store
+chromadb = "^0.5"
+
+# Core utilities
+pydantic = "^2.0"
+numpy = "^1.24"
+tqdm = "^4.65"
+
+# CLI
+typer = {version = "^0.12", extras = ["all"]}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^4.0"
+ruff = "^0.4"
+mypy = "^1.10"
+
+[tool.poetry.scripts]
+chromaflow = "chromaflow.cli:app"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "stress: marks tests as memory-intensive stress tests (run in isolation)",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
