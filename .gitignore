@@ -131,9 +131,13 @@ chromaflow_output/
 *.wav
 !tests/fixtures/*
 
-# Model cache
+# Model cache (ML model weights, not Python packages)
 .cache/
-models/
+/models/
+*.pt
+*.pth
+*.bin
+*.onnx
 
 # ChromaDB
 chroma_data/
